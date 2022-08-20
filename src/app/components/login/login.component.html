@@ -1,0 +1,53 @@
+<div class="auth-page">
+  <div class="container page">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 col-xs-12">
+        <h1 class="text-xs-center">Sign in</h1>
+
+        <form #ngForm="ngForm" (ngSubmit)="login()">
+          <fieldset class="form-group">
+            <input
+              name="email"
+              #tEmail="ngModel"
+              required
+              email
+              [(ngModel)]="user.email"
+              class="form-control form-control-lg"
+              type="text"
+              placeholder="Email"
+            />
+          </fieldset>
+          <ul *ngIf="tEmail.invalid && tEmail.errors">
+            <li *ngIf="tEmail.errors['email']">請輸入email地址</li>
+            <li *ngIf="tEmail.errors['required']">Email格式不正確</li>
+          </ul>
+          <fieldset class="form-group">
+            <input
+              name="password"
+              #tPassword="ngModel"
+              required
+              minlength="4"
+              [(ngModel)]="user.password"
+              class="form-control form-control-lg"
+              type="password"
+              placeholder="Password"
+            />
+          </fieldset>
+          <ul *ngIf="tPassword.invalid && tPassword.errors">
+            <li *ngIf="tPassword.errors['required']">請輸入密碼</li>
+            <li *ngIf="tPassword.errors['minlength']">
+              密碼長度必須大於
+              {{ tPassword.errors["minlength"].requiredLength }} 個字元
+            </li>
+          </ul>
+          <button
+            [disabled]="ngForm.invalid"
+            class="btn btn-lg btn-primary pull-xs-right"
+          >
+            Sign in
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

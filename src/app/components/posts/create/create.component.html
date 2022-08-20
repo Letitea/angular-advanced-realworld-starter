@@ -1,0 +1,70 @@
+<div class="editor-page">
+  <div class="container page">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1 col-xs-12">
+        <form [formGroup]="post" (ngSubmit)="createPost()">
+          <fieldset class="form-group">
+            <input
+              class="form-control form-control-lg"
+              type="text"
+              placeholder="Post Title"
+              formControlName="title"
+            />
+          </fieldset>
+          <ul *ngIf="post.controls.title.dirty && post.controls.title.errors">
+            <li *ngIf="post.controls.title.errors['required']">請輸入標題</li>
+          </ul>
+          <fieldset class="form-group">
+            <textarea
+              class="form-control"
+              rows="3"
+              placeholder="Description"
+              formControlName="description"
+            ></textarea>
+          </fieldset>
+          <fieldset class="form-group">
+            <textarea
+              class="form-control"
+              rows="8"
+              placeholder="Post body"
+              formControlName="body"
+            ></textarea>
+          </fieldset>
+          <ul *ngIf="post.controls.body.dirty && post.controls.body.errors">
+            <li *ngIf="post.controls.body.errors['required']">請輸入內文</li>
+            <li *ngIf="post.controls.body.errors['minlength']">
+              內文至少
+              {{ post.controls.body.errors["minlength"].requiredLength }} 個字
+            </li>
+          </ul>
+          <fieldset class="form-group">
+            <input
+              #tag
+              (keyup.enter)="addTag(tag.value); tag.value = ''"
+              (keydown.enter)="$event.preventDefault()"
+              class="form-control"
+              type="text"
+              placeholder="Enter tags"
+            />
+            <div class="tag-list">
+              <span
+                *ngFor="let tag of post.controls.tags.controls; let i = index"
+                class="label label-pill label-default"
+              >
+                <i class="ion-close-round" (click)="removeTag(i)"></i>
+                {{ tag.value }}</span
+              >
+            </div>
+          </fieldset>
+          <button
+            type="submit"
+            [disabled]="post.invalid"
+            class="btn btn-lg btn-primary pull-xs-right"
+          >
+            Create Post
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
